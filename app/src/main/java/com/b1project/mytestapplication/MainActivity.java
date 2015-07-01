@@ -1,20 +1,34 @@
 package com.b1project.mytestapplication;
 
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,FirstBlankFragment.OnFragmentInteractionListener,SecondBlankFragment.OnFragmentInteractionListener {
+
+    private final static String TAG = MainActivity.class.getName();
+    private FragmentManager mFragmentManager;
+    private NavigationView mNavigationView;
+    private DrawerLayout mDrawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation);
-        navigationView.setNavigationItemSelectedListener(this);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation);
+        mNavigationView.setNavigationItemSelectedListener(this);
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, FirstBlankFragment.newInstance("",""))
+                .commit();
     }
 
     @Override
@@ -41,7 +55,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
-        Log.d("TEST", "item id #" + id);
+        Log.d(TAG, "item id #" + id);
+        menuItem.setChecked(true);
+        switch (id){
+            case R.id.nav_item_1:
+                mFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, FirstBlankFragment.newInstance("",""))
+                        .commit();
+                break;
+            case R.id.nav_item_2:
+                mFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container, SecondBlankFragment.newInstance("",""))
+                        .commit();
+                break;
+        }
+        mDrawerLayout.closeDrawer(mNavigationView);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri){
+        Log.d(TAG, uri.toString());
+        String username = uri.getQueryParameter("username");
+        Snackbar.make(findViewById(R.id.fragment_container), "Hello " + username + " !!!", Snackbar.LENGTH_LONG)
+                    .show();
     }
 }
