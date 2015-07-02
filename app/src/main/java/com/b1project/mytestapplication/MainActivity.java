@@ -10,8 +10,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,FirstBlankFragment.OnFragmentInteractionListener,SecondBlankFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener,
+        FirstBlankFragment.OnFragmentInteractionListener,
+        SecondBlankFragment.OnFragmentInteractionListener,
+        View.OnClickListener{
 
     private final static String TAG = MainActivity.class.getName();
     private FragmentManager mFragmentManager;
@@ -78,6 +83,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, uri.toString());
         String username = uri.getQueryParameter("username");
         Snackbar.make(findViewById(R.id.fragment_container), "Hello " + username + " !!!", Snackbar.LENGTH_LONG)
+                .setAction("annuler", this)
                     .show();
+    }
+
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        Log.d(TAG, "Snackbar click");
     }
 }

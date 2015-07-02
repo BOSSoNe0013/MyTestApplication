@@ -78,7 +78,6 @@ public class SecondBlankFragment extends Fragment implements TabLayout.OnTabSele
         mTabLayout.addTab(mTabLayout.newTab().setText("tab 1"));
         mTabLayout.addTab(mTabLayout.newTab().setText("tab 2"));
         mTabLayout.addTab(mTabLayout.newTab().setText("tab 3"));
-        mTabLayout.setOnTabSelectedListener(this);
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabLayout));
         return view;
     }
