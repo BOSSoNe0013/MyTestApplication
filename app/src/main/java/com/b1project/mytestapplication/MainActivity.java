@@ -1,12 +1,14 @@
 package com.b1project.mytestapplication;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,7 +84,10 @@ public class MainActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri){
         Log.d(TAG, uri.toString());
         String username = uri.getQueryParameter("username");
-        Snackbar.make(findViewById(R.id.fragment_container), "Hello " + username + " !!!", Snackbar.LENGTH_LONG)
+        Spanned hello = Html.fromHtml(
+                getResources().getString(R.string.hello_user, username)
+        );
+        Snackbar.make(findViewById(R.id.fragment_container), hello, Snackbar.LENGTH_LONG)
                 .setAction("annuler", this)
                     .show();
     }

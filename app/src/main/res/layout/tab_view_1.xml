@@ -9,5 +9,6 @@
         android:text="@string/tab1_content"
         android:id="@+id/textView"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@android:color/white" />
 </RelativeLayout>
